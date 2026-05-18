@@ -3,22 +3,73 @@ source "$(dirname "$0")/../lib/common.sh"
 
 print_header "Module 02: Configuration (5 min)"
 
-print_step 1 "Set your identity"
-echo -e "${YLW}Enter your name:${RST}"
-read -r git_name
-execute_command "git config --global user.name \"$git_name\""
+# Setup a sandboxed local repository to demonstrate local vs global configuration scoping
+REPO_DIR="02-exercise-configuration"
+rm -rf "$REPO_DIR"
+mkdir -p "$REPO_DIR" && cd "$REPO_DIR"
+git init > /dev/null
 
-echo -e "\n${YLW}Enter your email:${RST}"
-read -r git_email
-execute_command "git config --global user.email \"$git_email\""
+print_step 1 "Set your global identity"
+echo -e "${YLW}Scenario: Before making any commits, Git needs to know who you are.${RST}"
+echo -e "${YLW}Global settings apply to ALL your repositories for your active operating system user.${RST}\n"
+
+echo -e "${YLW}1. Configure your global commit username:${RST}"
+student_command "git config --global user.name \"DevOps Student\""
 wait_user
 
-print_step 2 "Add useful aliases"
+echo -e "\n${YLW}2. Configure your global commit email address (e.g., your personal email):${RST}"
+student_command "git config --global user.email \"student@personal-hub.com\""
+wait_user
+
+
+print_step 2 "Best Practice: Scoping & Local Overrides"
+echo -e "${RED}⚠️ BEST PRACTICE WARNING:${RST}"
+echo -e "${YLW}Using '--global' for your email is convenient, but blindly using it everywhere is a common mistake.${RST}"
+echo -e "${YLW}In professional life, you will work on corporate projects (using your work email)${RST}"
+echo -e "${YLW}and personal/open-source projects (using your personal email). You must keep them separate!${RST}\n"
+
+echo -e "${BOLD}Git has 3 Scopes of Configuration:${RST}"
+echo -e "  - ${BOLD}--system${RST}: Entire system (all users) - stored in /etc/gitconfig"
+echo -e "  - ${BOLD}--global${RST}: Active OS user (all repositories) - stored in ~/.gitconfig"
+echo -e "  - ${BOLD}--local${RST} (default): Active repository ONLY - stored in .git/config\n"
+
+echo -e "${YLW}Scenario: This repository is a corporate project. We want to override our email${RST}"
+echo -e "${YLW}with our company address ONLY inside this directory, without affecting other repos.${RST}\n"
+
+echo -e "${YLW}1. Configure your local email (without '--global', which defaults to '--local'):${RST}"
+student_command "git config user.email \"student@corporate-work.com\""
+wait_user
+
+echo -e "\n${YLW}2. Verify that this repository is using the corporate email:${RST}"
+student_command "git config user.email"
+wait_user
+
+echo -e "\n${YLW}3. Verify that your global configuration still safely preserves your personal email:${RST}"
+student_command "git config --global user.email"
+wait_user
+
+
+print_step 3 "Add useful Ops aliases"
+echo -e "${YLW}Scenario: For global tools like command shortcuts (aliases), using '--global' is the perfect choice!${RST}"
+echo -e "${YLW}Let's configure 'git st' for status, and a beautiful visual log shortcut 'git lg'.${RST}\n"
+
+echo -e "${YLW}1. Create the 'git st' alias for status:${RST}"
 student_command "git config --global alias.st status"
-student_command "git config --global alias.lg \"log --graph --oneline --all\""
-echo "Aliases 'st' and 'lg' added."
 wait_user
 
-print_step 3 "List current configuration"
-student_command "git config --list | head -n 10"
+echo -e "\n${YLW}2. Create the 'git lg' alias for a beautiful, graph-based oneline log:${RST}"
+student_command "git config --global alias.lg \"log --graph --oneline --all\""
+wait_user
+
+
+print_step 4 "Verify your Git configuration list"
+echo -e "${YLW}Scenario: Let's view the configuration list to see both local and global values in action:${RST}\n"
+
+echo -e "${YLW}1. List only the global configuration values:${RST}"
+student_command "git config --global --list"
+wait_user
+
+echo -e "\n${YLW}2. List all configuration values (local overrides global inside this repository):${RST}"
+student_command "git config --list"
+
 echo -e "\n${GRN}Module 02 completed!${RST}"
