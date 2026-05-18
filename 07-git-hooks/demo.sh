@@ -86,5 +86,14 @@ wait_user
 
 echo -e "\n${YLW}3. Commit again. This time it should succeed perfectly!${RST}"
 student_command "git commit -m 'chore: add setup script without todo'"
+wait_user
+
+print_summary \
+    "What Git Hooks represent (event-driven scripts executed locally on your machine)." \
+    "Understanding the role of the default '.git/hooks/' templates directory and '.sample' files." \
+    "Why execution permissions ('chmod +x') are absolutely required for Git to run hooks." \
+    "How 'pre-commit' hooks act as automated local security and quality gates (e.g., blocking secrets/unfinished work)." \
+    "Standardizing commit workflows using Conventional Commits ('chore:', 'feat:', 'fix:')." \
+    "How hooks dramatically improve DevOps quality by enforcing standards locally before any remote pushes."
 
 echo -e "\n${GRN}Module 07 completed!${RST}"

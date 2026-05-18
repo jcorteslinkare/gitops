@@ -11,14 +11,30 @@ mkdir -p "${TRAINING_DIR}"
 cd "${TRAINING_DIR}"
 
 
+CURRENT_HEADER=""
+
 function print_header() {
-    printf "\033[H\033[2J"
-    echo -e "${BLU}>>> $1${RST}"
+    CURRENT_HEADER="$1"
+    echo -e "${BLU}>>> ${CURRENT_HEADER}${RST}"
 }
 
 function print_step() {
-    printf "\033[H\033[2J"
+    clear
+    if [[ -n "${CURRENT_HEADER}" ]]; then
+        echo -e "${BLU}>>> ${CURRENT_HEADER}${RST}"
+    fi
     echo -e "\n${BOLD}Step $1: $2${RST}"
+}
+
+function print_summary() {
+    echo -e "\n${GRN}================================================================${RST}"
+    echo -e "${BOLD}${GRN}🎓 RECAP: What You Learned in this Module!${RST}"
+    echo -e "${GRN}================================================================${RST}"
+    for line in "$@"; do
+        echo -e "  ${GRN}✔${RST} $line"
+    done
+    echo -e "${GRN}================================================================${RST}"
+    wait_reading
 }
 
 function wait_user() {
@@ -55,10 +71,9 @@ function student_command() {
         # Erase the 'exit' message printed by the interactive bash shell termination
         printf "\033[1A\033[2K"
         
+        # Synchronize directory changes (cd) back to the parent process if necessary
         if [[ "$1" == cd\ * ]]; then
             eval "$1"
-        else
-            eval "$1" >/dev/null 2>&1
         fi
     else
         echo -e "${MAG}$ $1${RST}"

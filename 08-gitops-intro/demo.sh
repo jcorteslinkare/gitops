@@ -88,6 +88,13 @@ echo -e "  [+] Pod web-server-8q91z - ${GRN}Running${RST}"
 echo -e "${GRN}🟢 STATE IS IN SYNC! 5 pods running (Real State == Desired State).${RST}"
 wait_reading
 
+print_summary \
+    "The core Declarative Model—defining our Desired State (infrastructure, pods) as files in Git." \
+    "What the GitOps Loop represents (the continuous reconciliation loop comparing Git with active environments)." \
+    "How agents (like ArgoCD or Flux) dynamically detect and fix Drift (out-of-sync cluster status)." \
+    "CRITICAL RULE: Never modify active infrastructure directly; always declare state in Git to drive reconciliation." \
+    "Why Git serves as the single source of truth, establishing auditable, high-security operations."
+
 print_header "Workshop Concluded!"
 echo -e "${GRN}Congratulations! You have completed the Git for DevOps hands-on workshop!${RST}"
 echo -e "${BLU}Next steps:${RST} Implement these patterns using real ArgoCD, Flux, and GitLab CI/CD."

@@ -71,5 +71,13 @@ wait_user
 
 echo -e "\n${YLW}2. List all configuration values (local overrides global inside this repository):${RST}"
 student_command "git config --list"
+wait_user
+
+print_summary \
+    "The 3 Git configuration levels: --system (machine), --global (OS user), and --local (repository)." \
+    "Best Practice: Never use '--global' blindly for your commit email to avoid personal vs work address leakage." \
+    "How to override global settings locally using 'git config user.email' (local-only config)." \
+    "How to configure high-speed productivity shortcuts (aliases) like 'git st' and 'git lg'." \
+    "How to verify and view active configurations using 'git config --list' and 'git config --global --list'."
 
 echo -e "\n${GRN}Module 02 completed!${RST}"

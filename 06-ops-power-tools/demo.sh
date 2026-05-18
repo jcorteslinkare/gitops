@@ -105,6 +105,16 @@ student_command "git cherry-pick $FIX_HASH"
 
 echo -e "\n${YLW}Let's check the files in 'main' again. Notice 'firewall.sh' is now here!${RST}"
 student_command "ls -la"
+wait_user
 student_command "cat firewall.sh"
+wait_user
+
+print_summary \
+    "How to temporarily save unfinished workspace modifications using 'git stash'." \
+    "How to pop stashed work back into your working directory using 'git stash pop'." \
+    "Why stashing is crucial for Ops: switching branches quickly during production emergencies." \
+    "How to search specific commit history hashes using targeted log searches (e.g., 'git log experimental --oneline -n 1')." \
+    "How to surgically import a single, critical hotfix from another branch using 'git cherry-pick <commit-hash>'." \
+    "Why cherry-picking is a key Ops power tool for copying hotfixes directly to production branches without merging unstable features."
 
 echo -e "\n${GRN}Module 06 completed!${RST}"

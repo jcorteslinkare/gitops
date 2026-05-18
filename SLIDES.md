@@ -35,6 +35,17 @@
 
 ---
 
+### Secrets & Permanent History (Git vs SVN)
+
+- **The Immutability Trap:** What enters the version history stays in the history forever.
+- **In SVN:** Accidental credentials (passwords, keys) require highly complex database rebuilds on the central server to erase.
+- **In Git:** Since Git is fully distributed, once you push a secret, **every developer** who pulls gets a local copy of that secret!
+- **DevOps Best Practice:**
+  1. **Never store raw secrets** in Git. Use HashiCorp Vault, Kubernetes Secrets, or env vars.
+  2. **Automate prevention:** Use local **Git Hooks** (Module 07) to scan and block passwords/keys *before* committing!
+
+---
+
 ## Module 04: Branching & Merging (25 min)
 ### Parallel work without fear
 

@@ -24,5 +24,12 @@ print_step 3 "Verify the Git directory"
 echo -e "${YLW}Scenario: Git stores all its configuration, history, and internal metadata in a hidden folder.${RST}"
 echo -e "${YLW}Let's list all files, including hidden ones, to see the newly created '.git' folder:${RST}\n"
 student_command "ls -la"
+wait_user
+
+print_summary \
+    "How to verify the installed Git version using 'git --version'." \
+    "How to initialize a fresh, empty Git repository using 'git init'." \
+    "Understanding that Git stores 100% of its history and config in the hidden '.git' folder." \
+    "Why Git is crucial for DevOps: Infrastructure as Code (IaC) history, auditability, and rollbacks."
 
 echo -e "\n${GRN}Module 01 completed!${RST}"
