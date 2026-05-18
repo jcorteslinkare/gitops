@@ -44,7 +44,7 @@ execute_command "git push origin main"
 echo -e "\n${YLW}Note: In a real environment, Git will NOT notify you when Alice pushes.${RST}"
 echo -e "${YLW}You must fetch or pull to see or merge her changes.${RST}"
 execute_command "cd ../$REPO_DIR"
-wait_user
+wait_reading
 
 print_step 4 "Pull the updates"
 student_command "git pull origin main"

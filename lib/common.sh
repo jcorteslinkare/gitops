@@ -29,6 +29,11 @@ function wait_user() {
     read -r
 }
 
+function wait_reading() {
+    echo -e "\n${DIM}Press [Enter] to continue...${RST}"
+    read -r
+}
+
 function execute_command() {
     echo -e "${MAG}$ $1${RST}"
     eval "$1"
