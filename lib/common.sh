@@ -28,3 +28,14 @@ function execute_command() {
     echo -e "${MAG}$ $1${RST}"
     eval "$1"
 }
+
+# Wrapper for git to ensure new repositories default to 'main' branch
+# without changing the user's global git configuration.
+function git() {
+    if [[ "$1" == "init" ]]; then
+        command git init -b main "${@:2}"
+    else
+        command git "$@"
+    fi
+}
+
