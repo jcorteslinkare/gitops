@@ -52,6 +52,9 @@
 - `git fetch`: Get updates without changing local code.
 - `git pull`: Fetch + Merge.
 - `git push`: Send changes to the server.
+- **The "origin" concept:**
+  - `origin` is just the default name of the server you cloned from.
+  - You can configure multiple servers (e.g., `origin` for a fork, `upstream` for original repo).
 - **Pull Requests:** The basis of Code Review.
 
 ---

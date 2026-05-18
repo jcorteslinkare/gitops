@@ -6,10 +6,24 @@ Git is a distributed system, which means your local repository needs to communic
 
 A "remote" is a URL pointing to the server where code is shared. The default name for the main server is `origin`.
 
+### What is "origin"?
+
+When you clone a repository, Git automatically creates a shortcut named `origin` pointing back to the server you cloned from. You can think of it as an alias or variable for the remote server URL.
+
+### Why do we run `git pull origin main` and not just `git pull main`?
+
+A local Git repository can communicate with **multiple** remote servers (for example, `origin` for your team's central repo, `upstream` for a base open-source repo, or even a different server for deployments).
+
+Therefore, when running a command:
+- **`origin`** tells Git **which server** to contact.
+- **`main`** tells Git **which branch** on that server you want to work with.
+
+If you ran `git pull main`, Git would be confused because it wouldn't know which server to contact (unless you've configured a default tracking branch, but specifying `origin main` is always explicit and safe).
+
 ## Main Commands
 
 - `git clone <url>`: Copies a remote repository to your machine.
-- `git remote -v`: Lists configured servers.
+- `git remote -v`: Lists configured servers and their aliases.
 - `git fetch`: Gets updates from the server but doesn't apply them to your code (it's safe).
 - `git pull`: Gets updates and tries to apply them to your current branch (Fetch + Merge).
 - `git push`: Sends your local commits to the server.

@@ -13,7 +13,14 @@ print_step 1 "Clone the 'remote' repository"
 REPO_DIR="my-local-work"
 rm -rf "$REPO_DIR"
 execute_command "git clone $REMOTE_REPO $REPO_DIR"
-cd "$REPO_DIR"
+execute_command "cd $REPO_DIR"
+execute_command "git remote -v"
+
+echo -e "\n${YLW}Note: Cloning automatically creates a remote shortcut named 'origin' pointing to the server.${RST}"
+echo -e "${YLW}When you run 'git pull origin main', you are telling Git:${RST}"
+echo -e "${YLW}  1. Go to the remote server named 'origin'${RST}"
+echo -e "${YLW}  2. Pull the branch named 'main'${RST}"
+echo -e "${YLW}If you just ran 'git pull main', Git wouldn't know which server to contact!${RST}"
 wait_user
 
 print_step 2 "Push your first change"
@@ -23,17 +30,20 @@ execute_command "git commit -m 'initial shared commit'"
 execute_command "git push origin main"
 wait_user
 
-print_step 3 "Simulate a colleague's work"
+print_step 3 "Simulate a colleague's work (Alice)"
+echo -e "${YLW}Meanwhile, your colleague Alice is working on another machine...${RST}"
 COLLEAGUE_DIR="../colleague-work"
 rm -rf "$COLLEAGUE_DIR"
-git clone "$REMOTE_REPO" "$COLLEAGUE_DIR" > /dev/null
-cd "$COLLEAGUE_DIR"
-echo "Colleague's update" > update.txt
-git add update.txt
-git commit -m "colleague added update.txt" > /dev/null
-git push origin main > /dev/null
-echo -e "${YLW}A colleague has pushed changes to the server.${RST}"
-cd "../$REPO_DIR"
+execute_command "git clone $REMOTE_REPO $COLLEAGUE_DIR"
+execute_command "cd $COLLEAGUE_DIR"
+execute_command "echo \"Colleague's update\" > update.txt"
+execute_command "git add update.txt"
+execute_command "git commit -m \"colleague added update.txt\""
+execute_command "git push origin main"
+
+echo -e "\n${YLW}Note: In a real environment, Git will NOT notify you when Alice pushes.${RST}"
+echo -e "${YLW}You must fetch or pull to see or merge her changes.${RST}"
+execute_command "cd ../$REPO_DIR"
 wait_user
 
 print_step 4 "Pull the updates"
