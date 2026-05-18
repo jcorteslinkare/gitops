@@ -4,39 +4,107 @@ source "$(dirname "$0")/../lib/common.sh"
 print_header "Module 06: Power Tools (15 min)"
 
 # Setup
-REPO_DIR="exercise-power-tools"
+REPO_DIR="06-exercise-power-tools"
 rm -rf "$REPO_DIR"
 mkdir -p "$REPO_DIR" && cd "$REPO_DIR"
 git init > /dev/null
-echo "original content" > file.txt
-git add file.txt
-git commit -m "initial commit" > /dev/null
+
+# Create a realistic Nginx config
+cat <<EOF > nginx.conf
+server {
+    listen 80;
+    server_name my-app.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+    }
+}
+EOF
+git add nginx.conf
+git commit -m "feat: add basic Nginx configuration" > /dev/null
 
 print_step 1 "The magic of Git Stash"
-echo "Unfinished work" >> file.txt
-echo -e "${YLW}Current status of file.txt:${RST}"
-cat file.txt
-execute_command "git stash"
-echo -e "\n${YLW}After stash (back to clean state):${RST}"
-cat file.txt
+echo -e "${YLW}Scenario: You are in the middle of migrating Nginx to HTTPS/SSL (nginx.conf).${RST}"
+echo -e "${YLW}Suddenly, a critical bug report comes in! You must switch tasks immediately.${RST}"
+echo -e "${YLW}You don't want to lose your half-finished SSL configuration, but you also don't want to commit broken code.${RST}"
+echo -e "${YLW}Let's see how Git Stash acts as your 'pause' button!${RST}\n"
+
+echo -e "${YLW}Adding the unfinished SSL config block to nginx.conf:${RST}"
+cat <<EOF >> nginx.conf
+
+# IN-PROGRESS: Adding SSL configuration
+server {
+    listen 443 ssl;
+    ssl_certificate /etc/ssl/certs/app.crt;
+    # (unfinished configuration...)
+}
+EOF
+
+student_command "cat nginx.conf"
+wait_user
+
+echo -e "\n${YLW}Saving your unfinished SSL config safely on the stash stack:${RST}"
+student_command "git stash"
+wait_user
+
+echo -e "\n${YLW}How do we check what is currently inside our stash?${RST}"
+echo -e "${YLW}1. List all stashed changes in the stack:${RST}"
+student_command "git stash list"
+wait_user
+
+echo -e "\n${YLW}2. Show a summary of files modified in the most recent stash:${RST}"
+student_command "git stash show"
+wait_user
+
+echo -e "\n${YLW}3. Show the actual code changes (diff) stored inside the stash:${RST}"
+student_command "git stash show -p"
+wait_user
+
+echo -e "\n${YLW}Verifying that nginx.conf is back to its clean, production-stable state:${RST}"
+student_command "cat nginx.conf"
 wait_user
 
 print_step 2 "Recover the work"
-execute_command "git stash pop"
-echo -e "\n${YLW}Work recovered:${RST}"
-cat file.txt
+echo -e "${YLW}Scenario: You successfully checked out other branches, solved the emergency issue, and are now back.${RST}"
+echo -e "${YLW}It is time to resume your SSL migration right where you left off!${RST}\n"
+
+echo -e "${YLW}Popping the stashed SSL changes back into your working directory:${RST}"
+student_command "git stash pop"
+
+echo -e "\n${YLW}Checking nginx.conf. Notice your unfinished SSL configuration is back!${RST}"
+student_command "cat nginx.conf"
 wait_user
 
 print_step 3 "Cherry-pick a specific fix"
-git checkout -b experimental > /dev/null
-echo "Security fix" > security.txt
-git add security.txt
-git commit -m "fix: important security patch" > /dev/null
-FIX_HASH=$(git rev-parse HEAD)
-git checkout main > /dev/null
+echo -e "${YLW}Scenario: We have an unstable 'experimental' branch where we are testing new infrastructure tools.${RST}"
+echo -e "${YLW}In it, we committed a critical hotfix to block an active security attack (firewall.sh).${RST}"
+echo -e "${YLW}We want this firewall patch on 'main' IMMEDIATELY without merging the other experimental code.${RST}\n"
 
-echo -e "${YLW}Cherry-picking fix from experimental branch ($FIX_HASH)...${RST}"
-execute_command "git cherry-pick $FIX_HASH"
-execute_command "ls -la"
+# Switch to experimental branch and make the critical commit
+student_command "git checkout -b experimental"
+student_command "echo 'iptables -A INPUT -s 203.0.113.50 -j DROP # block rogue IP' > firewall.sh"
+student_command "git add firewall.sh"
+student_command "git commit -m 'fix: block malicious IP on firewall'"
+
+FIX_HASH=$(git rev-parse --short HEAD)
+wait_user
+
+echo -e "\n${YLW}Now we switch back to 'main' (which doesn't have the firewall fix yet):${RST}"
+student_command "git checkout main"
+echo -e "\n${YLW}Verifying files on 'main' (firewall.sh is NOT here):${RST}"
+student_command "ls -la"
+wait_user
+
+echo -e "\n${YLW}Wait! In a real-world scenario, how do we find the hash of the commit we want to cherry-pick?${RST}"
+echo -e "${YLW}We can search the log of the 'experimental' branch to locate our firewall fix commit and copy its hash!${RST}"
+student_command "git log experimental --oneline -n 1"
+wait_user
+
+echo -e "\n${YLW}Perfect! Now that we have identified the commit hash ($FIX_HASH), we can cherry-pick it into 'main':${RST}"
+student_command "git cherry-pick $FIX_HASH"
+
+echo -e "\n${YLW}Let's check the files in 'main' again. Notice 'firewall.sh' is now here!${RST}"
+student_command "ls -la"
+student_command "cat firewall.sh"
 
 echo -e "\n${GRN}Module 06 completed!${RST}"

@@ -51,10 +51,26 @@ function show_menu() {
 if [[ -n "${1:-}" ]] && [[ "$1" =~ ^[1-8]$ ]]; then
     selected=$((${1} - 1))
     dir="${modules[$selected]}"
-    echo -e "  ${GRN}→ Starting Module ${1}: ${labels[$selected]}${RST}"
+    
+    echo -e "${BOLD}Choose Training Mode:${RST}"
+    echo -e "  ${YLW}1${RST}  ${BOLD}Hands-on Mode${RST} (Interactive - you type the commands yourself)"
+    echo -e "  ${YLW}2${RST}  ${BOLD}Demo Mode${RST} (Automated - the script runs them for you)"
     echo
+    read -p "Selection [1-2, default: 1]: " mode_choice
+    mode_choice=${mode_choice:-1}
+    
+    if [[ "$mode_choice" == "1" ]]; then
+        export PLAY_MODE="interactive"
+        echo -e "\n  ${GRN}→ Starting Module ${1} in Hands-on Mode!${RST}"
+    else
+        export PLAY_MODE="demo"
+        echo -e "\n  ${GRN}→ Starting Module ${1} in Demo Mode!${RST}"
+    fi
+    echo
+    
     if [[ -f "${SCRIPT_DIR}/${dir}/demo.sh" ]]; then
-        exec bash "${SCRIPT_DIR}/${dir}/demo.sh"
+        bash "${SCRIPT_DIR}/${dir}/demo.sh"
+        exit 0
     else
         echo -e "${RED}Error: demo.sh not found in ${dir}${RST}"
         exit 1

@@ -3,6 +3,12 @@ source "$(dirname "$0")/../lib/common.sh"
 
 print_header "Module 08: GitOps Intro (5 min)"
 
+# Setup
+REPO_DIR="08-exercise-gitops"
+rm -rf "$REPO_DIR"
+mkdir -p "$REPO_DIR" && cd "$REPO_DIR"
+
+
 print_step 1 "The Declarative Model"
 echo -e "${YLW}In GitOps, we define the DESIRED state in Git.${RST}"
 cat <<EOF > deployment.yaml
@@ -18,7 +24,7 @@ spec:
       - name: nginx
         image: nginx:1.21
 EOF
-execute_command "cat deployment.yaml"
+student_command "cat deployment.yaml"
 wait_user
 
 print_step 2 "The GitOps Loop"
