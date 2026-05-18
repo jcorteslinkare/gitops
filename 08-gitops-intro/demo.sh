@@ -63,6 +63,8 @@ echo -e "${YLW}Scenario: Your app is experiencing high traffic! You need to scal
 echo -e "${YLW}CRITICAL RULE: Never modify the cluster directly! You must update the Git declaration.${RST}\n"
 
 echo -e "${YLW}1. Modify the replicas count from 3 to 5 in deployment.yaml:${RST}"
+echo -e "${DIM}(In real life you would open deployment.yaml in VS Code or Nano and change '3' to '5'.${RST}"
+echo -e "${DIM}Here we use 'sed' to simulate that edit directly in the terminal without opening an editor.)${RST}"
 student_command "sed -i 's/replicas: 3/replicas: 5/' deployment.yaml"
 wait_user
 

@@ -3,7 +3,8 @@ source "$(dirname "$0")/../lib/common.sh"
 
 print_header "Module 05: Collaboration (10 min)"
 
-# Setup a 'server' repo
+# Setup a simulated central 'server' repo (bare = no working directory, only Git history)
+# This is exactly how GitHub/GitLab stores your repository on their servers internally.
 REMOTE_REPO="$(pwd)/05-server-repo.git"
 rm -rf "$REMOTE_REPO"
 mkdir -p "$REMOTE_REPO"
@@ -11,7 +12,8 @@ git init --bare "$REMOTE_REPO" > /dev/null
 
 print_step 1 "Clone the remote repository"
 echo -e "${YLW}Scenario: Git is a distributed VCS. A central repository (like GitHub or GitLab)${RST}"
-echo -e "${YLW}acts as a sync hub. Let's clone our central repository to start working locally:${RST}\n"
+echo -e "${YLW}acts as a sync hub. For this exercise, we have pre-created a simulated central server repository.${RST}"
+echo -e "${DIM}(On real platforms like GitHub, this 'server repo' lives in their data centres. Here it is a local folder.)${RST}\n"
 
 REPO_DIR="05-my-local-work"
 rm -rf "$REPO_DIR"

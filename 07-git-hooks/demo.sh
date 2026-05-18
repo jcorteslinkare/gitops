@@ -39,6 +39,13 @@ echo -e "${BLU}║${RST}     exit 1                                             
 echo -e "${BLU}║${RST} fi                                                              ${BLU}║${RST}"
 echo -e "${BLU}╚══════════════════════════════════════════════════════════════════╝${RST}\n"
 
+echo -e "${YLW}Breaking down the script line by line:${RST}"
+echo -e "  ${BOLD}#!/bin/sh${RST}                       → Tells the OS to run this script using the system shell (sh)."
+echo -e "  ${BOLD}git diff --cached --name-only${RST}  → Lists ONLY the filenames that are currently staged (in the Staging Area)."
+echo -e "  ${BOLD}grep -q \"TODO\"${RST}                → Searches those files silently for the word 'TODO'. If found, returns true."
+echo -e "  ${BOLD}exit 1${RST}                          → Exit code 1 = FAILURE. Git sees this and aborts the entire commit."
+echo -e "  ${BOLD}exit 0${RST} (implicit)               → If no TODO found, the script exits with 0 = SUCCESS. Commit proceeds normally.\n"
+
 HOOK_FILE=".git/hooks/pre-commit"
 cat <<EOF > "$HOOK_FILE"
 #!/bin/sh
@@ -77,6 +84,8 @@ print_step 4 "Fix the issue and commit"
 echo -e "${YLW}Scenario: Let's remove the 'TODO' comment to satisfy the hook, and try committing again.${RST}\n"
 
 echo -e "${YLW}1. Remove the '# TODO' comment from setup.sh:${RST}"
+echo -e "${DIM}(In real life you would open the file in your editor and delete the '# TODO' comment manually.${RST}"
+echo -e "${DIM}Here we use the 'sed' command to simulate that edit directly in the terminal.)${RST}"
 student_command "sed -i 's/ # TODO//' setup.sh"
 wait_user
 

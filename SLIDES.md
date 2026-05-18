@@ -75,8 +75,8 @@
 
 - `git stash`: Save changes temporarily to switch branches.
 - `git cherry-pick`: Bring a specific commit from another branch.
-- `git rebase`: Rewrite history for a clean log.
-- `git reset`: Undo mistakes (with care!).
+- `git rebase` ⚠️ *(Advanced — not covered in hands-on)*: Rewrite history for a clean log.
+- `git reset` ⚠️ *(Advanced — use with care)*: Undo mistakes locally.
 
 ---
 

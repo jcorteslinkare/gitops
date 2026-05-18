@@ -78,6 +78,13 @@ echo -e "${YLW}2. Open and view the conflicted 'config.env' file to inspect the 
 student_command "cat config.env"
 wait_user
 
+echo -e "${YLW}How to read the conflict markers:${RST}"
+echo -e "  ${BOLD}<<<<<<< HEAD${RST}       → 'HEAD' means your current active branch ('main'). This is YOUR version."
+echo -e "  ${BOLD}=======${RST}            → The separator between the two conflicting versions."
+echo -e "  ${BOLD}>>>>>>> feature-a${RST}  → This is the INCOMING version from the branch you are merging in."
+echo -e "  ${DIM}To resolve: delete all 3 marker lines and keep the content you want from either or both sides.${RST}"
+wait_user
+
 
 print_step 5 "Resolve Conflict (Taking the best of both worlds)"
 echo -e "${YLW}Scenario: To resolve the conflict, we do NOT want to throw away any changes!${RST}"
