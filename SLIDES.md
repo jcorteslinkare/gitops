@@ -313,6 +313,7 @@ flowchart LR
 ```
 
 > 🎯 **Focus here:** `origin` is just a _nickname_ — you can have multiple remotes (fork + upstream).
+
 > 💬 **Presenter note:** `upstream` will be explained in the next slide — it has two different meanings in Git and is worth clarifying.
 
 ---
