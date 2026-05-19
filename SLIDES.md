@@ -203,6 +203,8 @@ gitGraph
 
 > 🎯 **Focus here:** The longer a branch lives, the more painful the merge. TBD eliminates that pain.
 
+> 💬 **Presenter note:** This table is intentionally opinionated. Branching strategies are a hotly debated topic in the industry — there is no universal answer, and teams often adapt each model to their context. This could easily fill a dedicated session on its own. If the discussion opens up, acknowledge the debate and move on — the goal here is awareness, not consensus.
+
 ---
 
 ### Trunk Based Development (TBD)
