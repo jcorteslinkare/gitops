@@ -218,7 +218,7 @@ gitGraph
   checkout short-lived-A
   commit id: "add ssl config"
   checkout main
-  merge short-lived-A id: "merge < 2 days ✅"
+  merge short-lived-A id: "fast merge ✅"
   commit id: "fix: db pool"
   commit id: "feat: cache layer"
 ```
