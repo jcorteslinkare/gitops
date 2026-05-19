@@ -53,7 +53,7 @@ style: |
 ### Why Git for Ops?
 
 ```mermaid
-%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}}}%%
+%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}, "themeCSS": "svg { background-color: #0d1117; }"}}%%
 flowchart LR
   A[Infrastructure as Code\nAnsible · Terraform] --> G[Git]
   B[Audit Trail\nWho changed what?] --> G
@@ -175,7 +175,7 @@ Git vs SVN — the problem is WORSE in Git:
 ### What is a Branch?
 
 ```mermaid
-%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}}}%%
+%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}, "themeCSS": "svg { background-color: #0d1117; }"}}%%
 gitGraph
   commit id: "initial config"
   commit id: "add nginx.conf"
@@ -210,7 +210,7 @@ gitGraph
 ### Trunk Based Development (TBD)
 
 ```mermaid
-%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}}}%%
+%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}, "themeCSS": "svg { background-color: #0d1117; }"}}%%
 gitGraph
   commit id: "feat: nginx base"
   branch short-lived-A
@@ -294,7 +294,7 @@ CACHE_ENABLED=true
 ### Git is Distributed
 
 ```mermaid
-%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}}}%%
+%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}, "themeCSS": "svg { background-color: #0d1117; }"}}%%
 flowchart LR
   subgraph Server ["☁️ GitHub / GitLab (origin)"]
     R[(Bare Repository)]
@@ -502,7 +502,7 @@ git rebase --continue    # move to next commit
 ### Local Automation — Your silent guardian
 
 ```mermaid
-%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}}}%%
+%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}, "themeCSS": "svg { background-color: #0d1117; }"}}%%
 sequenceDiagram
   participant D as Developer
   participant H as pre-commit Hook
@@ -564,7 +564,7 @@ fi
 ### The Natural Evolution of DevOps
 
 ```mermaid
-%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}}}%%
+%%{init: {"theme": "dark", "themeVariables": {"fontSize":"18px"}, "themeCSS": "svg { background-color: #0d1117; }"}}%%
 flowchart LR
   subgraph Dev ["👨‍💻 Developer"]
     C[Edit deployment.yaml\nreplicas: 3 → 5]
