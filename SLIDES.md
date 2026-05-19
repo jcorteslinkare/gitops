@@ -191,16 +191,67 @@ gitGraph
 
 ---
 
-### GitHub Flow vs GitFlow
+### Branching Strategies — Which one to pick?
 
-| | **GitHub Flow** | **GitFlow** |
-|-|---|---|
-| Complexity | Simple (2 branch types) | Complex (5 types) |
-| Best for | Continuous deploy, SaaS | Versioned release schedules |
-| Branches | `main` + `feature/*` | `main`, `develop`, `feature`, `release`, `hotfix` |
-| Ops / DevOps | ✅ Recommended | ⚠️ Only if you need strict versioning |
+| | **GitFlow** | **GitHub Flow** | **Trunk Based Dev** |
+|-|---|---|---|
+| Complexity | High (5 branch types) | Medium (2 types) | Low (1 branch) |
+| Branch lifetime | Weeks / months | Days / weeks | Hours (max 1–2 days) |
+| Best for | Versioned releases | Continuous deploy | CI/CD + GitOps |
+| Requires | Discipline + tooling | PR culture | Feature flags + CI |
+| Ops / DevOps | ⚠️ Avoid | ✅ Good | ✅✅ **Recommended** |
 
-> **For Ops:** GitHub Flow is sufficient in the vast majority of cases.
+> 🎯 **Focus here:** The longer a branch lives, the more painful the merge. TBD eliminates that pain.
+
+---
+
+### Trunk Based Development (TBD)
+
+```mermaid
+%%{init: {"theme":"base", "themeVariables": {"primaryColor":"#161b22","primaryTextColor":"#e6edf3","primaryBorderColor":"#79c0ff","lineColor":"#e6edf3","fontSize":"18px"}}}%%
+gitGraph
+  commit id: "feat: nginx base"
+  branch short-lived-A
+  checkout short-lived-A
+  commit id: "add ssl config"
+  checkout main
+  merge short-lived-A id: "merge < 2 days ✅"
+  commit id: "fix: db pool"
+  commit id: "feat: cache layer"
+```
+
+- Everyone integrates into `main` **at least once a day**
+- Short-lived branches: **hours, never days**
+- Unfinished features hidden with **feature flags**, not long branches
+- Requires a **strong CI pipeline** to catch regressions fast
+
+> 🎯 **Focus here:** TBD is the natural companion to GitOps — `main` is always deployable.
+
+---
+
+### TBD — Feature Flags in Practice
+
+```yaml
+# ansible/vars/features.yml — the feature flag file, also in Git!
+features:
+  new_tls_config: false    # commit the code, hide the behaviour
+  rate_limiting: true
+  experimental_cache: false
+```
+
+```bash
+# Your playbook only activates the feature when the flag is true
+- name: Apply new TLS config
+  include_tasks: tls_v2.yml
+  when: features.new_tls_config | bool
+```
+
+**TBD workflow:**
+1. Commit code behind a flag → `main` stays green
+2. Enable flag in staging → validate
+3. Enable flag in prod → instant rollback = flip flag to `false`
+
+> ⚠️ **No flag = no merge to main** if the feature is not yet ready for prod.
 
 ---
 
