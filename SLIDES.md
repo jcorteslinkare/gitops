@@ -123,9 +123,9 @@ git config --global alias.last "log -1 HEAD"
 ╔══════════════╗    git add     ╔══════════════╗   git commit  ╔══════════════╗
 ║   Working    ║ ─────────────► ║   Staging    ║ ────────────► ║  Repository  ║
 ║  Directory   ║                ║     Area     ║               ║   (.git/)    ║
-║              ║ ◄──────────── ║              ║               ║              ║
-║  (modified)  ║  git restore  ║   (staged)   ║               ║ (committed)  ║
-╚══════════════╝               ╚══════════════╝               ╚══════════════╝
+║              ║ ◄────────────  ║              ║               ║              ║
+║  (modified)  ║  git restore   ║   (staged)   ║               ║ (committed)  ║
+╚══════════════╝                ╚══════════════╝               ╚══════════════╝
       💻                              📦                             🗄️
   Ficheiros no                  "Carrinho de                  Snapshot imutável
   disco local                   compras"                      com hash SHA
@@ -291,9 +291,9 @@ git pull = ─────────┤
       │   feature/my-change     │
       │                         ├─ Revê o diff
       │                         ├─ Comenta
-      │◄────────── Aprova ───────┤
+      │◄────────── Aprova ──────┤
       │                         │
-      ├─ Merge para main ───────►│
+      ├─ Merge para main ──────►│
       │                         │
 ```
 
