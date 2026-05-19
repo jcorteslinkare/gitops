@@ -245,7 +245,8 @@ features:
 # Your playbook only activates the feature when the flag is true
 - name: Apply new TLS config
   include_tasks: tls_v2.yml
-  when: features.new_tls_config | bool
+  when: 
+    - features.new_tls_config
 ```
 
 **TBD workflow:**
@@ -311,6 +312,7 @@ flowchart LR
 ```
 
 > 🎯 **Focus here:** `origin` is just a _nickname_ — you can have multiple remotes (fork + upstream).
+> 💬 **Presenter note:** `upstream` will be explained in the next slide — it has two different meanings in Git and is worth clarifying.
 
 ---
 
@@ -332,6 +334,44 @@ git pull = ─────────┤
 ```
 
 > ⚡ **Demo:** `./run-exercises.sh 05` — clone, push, simulate colleague (Alice), `git pull`
+
+---
+
+### Understanding "upstream" — Two meanings
+
+**Meaning 1 — Tracking branch** (local Git concept)
+
+```bash
+# -u sets which remote branch your local branch "follows"
+git push -u origin main
+
+# After this, Git knows the link:
+#   local branch:  main
+#   tracks:        origin/main   ← this is the "upstream"
+
+# Now these shortcuts work without specifying remote + branch:
+git push        # knows to push to origin/main
+git pull        # knows to pull from origin/main
+git status      # shows "Your branch is ahead of 'origin/main' by 2 commits"
+```
+
+**Meaning 2 — The original repo** (open-source / fork workflow)
+
+```bash
+# You fork a project on GitHub → your fork is 'origin'
+# The original project repo is called 'upstream' by convention
+git remote add upstream https://github.com/original-org/project.git
+
+git remote -v
+# origin    https://github.com/YOU/project.git   (push/pull your fork)
+# upstream  https://github.com/original-org/project.git  (pull updates from source)
+
+# Sync your fork with the original project:
+git fetch upstream
+git merge upstream/main
+```
+
+> 🎯 **Focus here:** In day-to-day Ops work, "upstream" almost always means **Meaning 1** — the remote branch your local branch tracks.
 
 ---
 
@@ -400,15 +440,61 @@ git cherry-pick abc1234
 
 ---
 
-### `git rebase` ⚠️ and `git reset` ⚠️
+### `git reset` — Undoing local mistakes
 
-| Command | What it does | When to use | Risk |
-|---------|-------------|-------------|------|
-| `git rebase` | Rewrites history (replays commits on top of another base) | Clean up history before a PR | High — never on shared branches |
-| `git reset --soft` | Undoes commit, keeps staging | Fix the last commit message | Low |
-| `git reset --hard` | Undoes commit AND discards changes | Abort a wrong path entirely | High — you will lose work! |
+**`git reset --soft`** — safest: moves HEAD back, keeps your changes staged
 
-> ⚠️ Golden rule: **Never rewrite history that has already been shared with others.**
+```bash
+# Scenario: you committed too early with a bad message — only local, not pushed yet
+git log --oneline
+# a1b2c3 WIP asdfasdf       ← this commit is a mess
+# d4e5f6 feat: add nginx config
+
+git reset --soft HEAD~1    # undo last commit, keep changes staged
+git commit -m "feat: add ssl termination to nginx"   # clean re-commit
+```
+
+**`git reset --hard`** — destructive: moves HEAD back AND discards all changes
+
+```bash
+# Scenario: you went down the wrong path and want to start over entirely
+git reset --hard HEAD~2    # wipe last 2 commits + working dir changes
+# ⚠️ No recovery without git reflog — only use locally, never after push
+```
+
+> ⚠️ Golden rule: **Never reset commits that have already been pushed / shared with others.**
+
+---
+
+### `git rebase` — Replaying commits on a new base
+
+```
+BEFORE rebase:                    AFTER git rebase main:
+
+  main:     A─B─C                   main:     A─B─C
+                 \                                  \
+  feature:        D─E                feature:        D'─E'
+                                                 (new SHA!)
+```
+
+`rebase` picks up your branch commits (D, E) and **replays** them on top of the latest `main`.
+The result is a clean, linear history — no merge commit noise.
+
+```bash
+# Typical safe use: clean up your local feature branch before opening a PR
+git checkout feature/my-fix
+git rebase main          # replay my commits on top of latest main
+
+# If conflicts appear during rebase:
+git status               # see which files conflict
+# ... resolve conflicts manually ...
+git add resolved-file.yml
+git rebase --continue    # move to next commit
+# or: git rebase --abort  # give up and go back to before rebase
+```
+
+> 🎯 **Focus here:** `rebase` rewrites SHAs — safe only on **your own local branch**, never on shared branches.
+> ⚠️ If in doubt: use `git merge` instead. Less clean history, but zero risk of breaking teammates.
 
 ---
 
