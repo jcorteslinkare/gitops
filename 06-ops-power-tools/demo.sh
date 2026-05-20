@@ -109,48 +109,60 @@ wait_user
 student_command "cat firewall.sh"
 wait_user
 
-print_step 4 "Undo a bad commit with Git Reset"
-echo -e "${YLW}Scenario: You committed a broken configuration or used a terrible commit message.${RST}"
-echo -e "${YLW}Since you haven't pushed it yet, you can safely undo it using 'git reset'.${RST}\n"
+print_step 4 "Undo a mistake with Git Reset"
+echo -e "${YLW}Scenario: Remember the SSL config we popped from the stash? It's still uncommitted.${RST}"
+echo -e "${YLW}Let's finish it, but pretend we accidentally add a syntax error and commit it.${RST}\n"
 
-echo -e "${YLW}Let's create a 'bad' commit that we want to undo:${RST}"
-student_command "echo 'broken_syntax=true' >> nginx.conf"
+echo -e "${YLW}Appending a broken line to nginx.conf and committing everything:${RST}"
+student_command "echo 'ssl_protocols TLSv1.3 # oops missing semicolon' >> nginx.conf"
 student_command "git add nginx.conf"
-student_command "git commit -m 'oops this is a bad commit'"
+student_command "git commit -m 'feat: finish SSL config (with typo)'"
+wait_user
+
+echo -e "\n${YLW}We realise the mistake! Let's undo the commit but KEEP the files intact (safe reset):${RST}"
+student_command "git reset --soft HEAD~1"
+student_command "git status"
+wait_user
+
+echo -e "\n${YLW}Now the file is back in the staging area. We can fix the typo and commit again.${RST}"
+echo -e "${YLW}(We use a shortcut here to fix the file and commit)${RST}"
+student_command "sed -i 's/ssl_protocols TLSv1.3 # oops missing semicolon/ssl_protocols TLSv1.3;/' nginx.conf"
+student_command "git add nginx.conf"
+student_command "git commit -m 'feat: finish SSL configuration'"
 student_command "git log --oneline -n 2"
 wait_user
 
-echo -e "\n${YLW}Now, let's undo the commit but keep the file changes staged (safe reset):${RST}"
-student_command "git reset --soft HEAD~1"
-student_command "git status"
-student_command "git log --oneline -n 1"
+echo -e "\n${YLW}What if we commit something terrible and want to completely erase it? (hard reset)${RST}"
+student_command "echo 'THIS IS TERRIBLE' >> nginx.conf"
+student_command "git commit -am 'experimental: broke everything'"
+student_command "git log --oneline -n 2"
 wait_user
 
-echo -e "\n${YLW}What if we want to discard the changes entirely? (hard reset)${RST}"
-student_command "git reset --hard HEAD"
+echo -e "\n${YLW}Let's wipe out that last commit AND the file changes forever:${RST}"
+student_command "git reset --hard HEAD~1"
 student_command "cat nginx.conf"
 wait_user
 
 print_step 5 "Keep a linear history with Git Rebase"
-echo -e "${YLW}Scenario: You've been working on a new feature branch for days.${RST}"
-echo -e "${YLW}Meanwhile, 'main' has advanced. You want to update your branch with main's changes${RST}"
-echo -e "${YLW}but keep a clean, linear history for your final Pull Request.${RST}\n"
+echo -e "${YLW}Scenario: You've been assigned to add a caching layer (cache.conf).${RST}"
+echo -e "${YLW}You start working on a new branch. Meanwhile, a colleague pushes a critical update to 'main'.${RST}"
+echo -e "${YLW}You want those updates in your branch before creating your PR, keeping a linear history.${RST}\n"
 
-echo -e "${YLW}First, let's create our feature branch and add some work:${RST}"
+echo -e "${YLW}First, let's create our feature branch and do our cache work:${RST}"
 student_command "git checkout -b feature-cache"
-student_command "echo 'cache_enabled=true' > cache.conf"
+student_command "echo 'proxy_cache_path /data/nginx/cache;' > cache.conf"
 student_command "git add cache.conf"
-student_command "git commit -m 'feat: add cache layer'"
+student_command "git commit -m 'feat: add cache configuration'"
 wait_user
 
-echo -e "\n${YLW}Now, let's simulate someone else pushing a critical update to 'main':${RST}"
+echo -e "\n${YLW}Now, let's simulate a colleague pushing a global timeout fix to 'main' while we were away:${RST}"
 student_command "git checkout main"
-student_command "echo 'timeout=30s' > limits.conf"
+student_command "echo 'proxy_read_timeout 30s;' > limits.conf"
 student_command "git add limits.conf"
 student_command "git commit -m 'fix: add global timeout limits'"
 wait_user
 
-echo -e "\n${YLW}Let's look at the current diverging history before the rebase:${RST}"
+echo -e "\n${YLW}Let's look at the diverging history (notice the two separate paths):${RST}"
 student_command "git log --oneline --graph --all"
 wait_user
 
