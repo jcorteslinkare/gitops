@@ -174,7 +174,18 @@ git lg              # Visual history graph (alias set up in module 02)
 
 ---
 
-### ⚠️ The Permanent Danger of Secrets
+## ⚠️ Critical Care: Two Golden Rules of Git History
+
+Because Git history is distributed and permanent, there are two major dangers you must avoid in Ops:
+
+1. **Leaking Secrets:** What goes into history, stays in history forever.
+2. **Altering Shared History:** Changing the past breaks your colleagues' local repositories.
+
+Let's explore both scenarios.
+
+---
+
+### 1. The Permanent Danger of Secrets
 
 ```
 Git vs SVN — the problem is WORSE in Git:
@@ -193,7 +204,7 @@ Git vs SVN — the problem is WORSE in Git:
 
 ---
 
-### ⚠️ The Danger of Altering History
+### 2. The Danger of Altering History
 
 **The Shared Calendar Analogy:** Imagine you and a colleague use a shared digital calendar.
 
