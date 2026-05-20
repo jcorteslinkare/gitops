@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Git for DevOps — Exercise Runner
+# Git for Ops — Exercise Runner
 # Guided interactive exercises for Git training
 # =============================================================================
 
@@ -35,7 +35,7 @@ labels=(
 function show_menu() {
     clear
     echo -e "${BLU}╔══════════════════════════════════════════════════════════════════╗${RST}"
-    echo -e "${BLU}║${RST}             ${BOLD}Git for DevOps — Hands-on Workshop${RST}              ${BLU}║${RST}"
+    echo -e "${BLU}║${RST}                 ${BOLD}Git for Ops — Hands-on Workshop${RST}                  ${BLU}║${RST}"
     echo -e "${BLU}╚══════════════════════════════════════════════════════════════════╝${RST}"
     echo
     echo -e "  ${BOLD}Available Modules:${RST}"

@@ -13,7 +13,7 @@ In Git, a branch is simply a movable pointer to a commit. The default branch is 
 - `git checkout -b <name>`: Creates and switches to the branch at the same time.
 - `git merge <name>`: Joins the history of the specified branch into the current branch.
 
-## Branching Strategies in DevOps
+## Branching Strategies in Ops
 
 1.  **GitHub Flow:** A main branch (`main`) that is always stable. A branch is created for each task, work is done, and then a Merge/Pull Request is made.
 2.  **GitFlow:** More complex, with `develop`, `release`, `hotfix` branches. Common in projects with rigid release cycles.

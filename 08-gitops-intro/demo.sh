@@ -98,5 +98,5 @@ print_summary \
     "Why Git serves as the single source of truth, establishing auditable, high-security operations."
 
 print_header "Workshop Concluded!"
-echo -e "${GRN}Congratulations! You have completed the Git for DevOps hands-on workshop!${RST}"
+echo -e "${GRN}Congratulations! You have completed the Git for Ops hands-on workshop!${RST}"
 echo -e "${BLU}Next steps:${RST} Implement these patterns using real ArgoCD, Flux, and GitLab CI/CD."

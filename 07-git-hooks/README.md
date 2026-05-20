@@ -2,7 +2,7 @@
 
 Git Hooks are scripts that Git executes automatically on certain events (before a commit, before a push, etc.).
 
-## What are they for in DevOps?
+## What are they for in Ops?
 
 As system administrators, we want to prevent common mistakes before they reach the server:
 - **Linting:** Check if a YAML or JSON file is valid.

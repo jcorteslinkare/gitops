@@ -103,6 +103,6 @@ print_summary \
     "Why execution permissions ('chmod +x') are absolutely required for Git to run hooks." \
     "How 'pre-commit' hooks act as automated local security and quality gates (e.g., blocking secrets/unfinished work)." \
     "Standardizing commit workflows using Conventional Commits ('chore:', 'feat:', 'fix:')." \
-    "How hooks dramatically improve DevOps quality by enforcing standards locally before any remote pushes."
+    "How hooks dramatically improve Ops quality by enforcing standards locally before any remote pushes."
 
 echo -e "\n${GRN}Module 07 completed!${RST}"

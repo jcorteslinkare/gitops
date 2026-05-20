@@ -14,7 +14,7 @@ echo -e "${YLW}Scenario: Before making any commits, Git needs to know who you ar
 echo -e "${YLW}Global settings apply to ALL your repositories for your active operating system user.${RST}\n"
 
 echo -e "${YLW}1. Configure your global commit username:${RST}"
-student_command "git config --global user.name \"DevOps Student\""
+student_command "git config --global user.name \"Ops Student\""
 wait_user
 
 echo -e "\n${YLW}2. Configure your global commit email address (e.g., your personal email):${RST}"

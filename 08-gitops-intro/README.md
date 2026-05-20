@@ -24,7 +24,7 @@ GitOps is an operational model for applications and infrastructure that uses Git
 
 ## Conclusion of the Training
 
-Mastering Git is the first step to becoming a modern DevOps engineer. From here, the limit is automation!
+Mastering Git is the first step to becoming a modern SysAdmin or Ops engineer. From here, the limit is automation!
 
 ---
 [Back to Home](../README.md)

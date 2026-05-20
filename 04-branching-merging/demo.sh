@@ -15,7 +15,7 @@ git add config.env
 git commit -m "chore: add initial base environment config" > /dev/null
 
 print_step 1 "Create and switch to a new branch"
-echo -e "${YLW}Scenario: In DevOps, we never develop directly on the production-ready 'main' branch.${RST}"
+echo -e "${YLW}Scenario: In Ops, we never develop directly on the production-ready 'main' branch.${RST}"
 echo -e "${YLW}Instead, we create an isolated 'feature branch' to work on our code or scripts safely.${RST}\n"
 
 echo -e "${YLW}1. Create and switch to a new branch called 'feature-a':${RST}"

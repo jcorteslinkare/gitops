@@ -1,4 +1,4 @@
-# Git for DevOps / Ops Training
+# Git for Ops Training
 
 This repository contains materials and exercises for a basic Git training course, specifically designed for System Administrators, Operations, and DevOps profiles.
 
