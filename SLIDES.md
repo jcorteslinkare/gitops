@@ -51,6 +51,25 @@ style: |
 ---
 
 ## Module 01: Introduction (5 min)
+### The Origins of Git
+
+- **The Problem:** Linus Torvalds (creator of Linux) was managing the kernel source code. He was deeply disappointed with the proprietary tools available at the time.
+- **The Solution:** In 2005, he took 10 days to write the first version of his own tool: Git.
+- **The Philosophy:** It had to be insanely fast, fully distributed, and capable of handling massive projects without relying on a slow central server.
+
+---
+
+### Myths and Truths about Git
+
+- ❌ **Myth:** "I need a GitHub account to use Git."
+  ✅ **Truth:** Git works entirely locally. You don't need the internet or an account to use version control on your machine.
+- ❌ **Myth:** "Git requires a remote server to collaborate."
+  ✅ **Truth:** John can share his repository directly with Jane over a local network. We only use remote servers (like GitHub) for **convenience** — if John goes on vacation, we don't want his laptop to stay powered on just so others can access the code!
+- ❌ **Myth:** "Git is only for software developers."
+  ✅ **Truth:** Git tracks *any* text. Ops teams use it for Ansible, Terraform, and documentation.
+
+---
+
 ### Why Git for Ops?
 
 ```mermaid
@@ -174,6 +193,24 @@ Git vs SVN — the problem is WORSE in Git:
 
 ---
 
+### ⚠️ The Danger of Altering History
+
+**The Shared Calendar Analogy:** Imagine you and a colleague use a shared digital calendar.
+
+- **The Commitment (Push):** Monday, you schedule *"Friday 1pm: Pizza"*. Your colleague syncs their calendar (`git pull`) and blocks their Friday.
+- **Altering the Past (Force Push):** Wednesday, you secretly alter the original event to *"Thursday 1pm: Sushi"*.
+- **The Clash (Conflict):** Your colleague didn't sync again. Friday at 1pm, they arrive at the Pizzeria. You tell them: *"Lunch was yesterday!"*
+
+**The Result in Git:**
+- Your colleague wasted time (valid work thrown away).
+- Their local repository is now in massive conflict with yours.
+
+**Golden Rule:** Never alter history on a branch that others are using!
+
+> 💡 **"Rewriting history is like secretly changing plans retroactively. Your colleagues' code will arrive at the 'wrong restaurant' creating a massive conflict."**
+
+---
+
 ## Module 04: Branching & Merging (25 min)
 ### What is a Branch?
 
@@ -202,7 +239,7 @@ gitGraph
 | Branch lifetime | Weeks / months | Days / weeks | Hours (max 1–2 days) |
 | Best for | Versioned releases | Continuous deploy | CI/CD + GitOps |
 | Requires | Discipline + tooling | PR culture | Feature flags + CI |
-| Ops / DevOps | ⚠️ Avoid | ✅ Good | ✅✅ **Recommended** |
+| Ops | ⚠️ Avoid | ✅ Good | ✅✅ **Recommended** |
 
 > 🎯 **Focus here:** The longer a branch lives, the more painful the merge. TBD eliminates that pain.
 
@@ -576,7 +613,7 @@ fi
 ---
 
 ## Module 08: Introduction to GitOps (5 min)
-### The Natural Evolution of DevOps
+### The Natural Evolution of Ops
 
 ```mermaid
 
