@@ -17,25 +17,51 @@ With the advent of **Infrastructure as Code (IaC)**, our configurations become c
 
 ## Practical Exercise
 
-In this first module, we will just ensure Git is installed and create our first local repository.
+In this first module, we will ensure Git is installed, explore a terminal UI client, and create our first local repository.
 
-1.  Check Git version:
+1.  **Install Git:**
+    Depending on your OS, you can install Git using your package manager:
+    - **Ubuntu/Debian:** `sudo apt update && sudo apt install git`
+    - **CentOS/RHEL:** `sudo dnf install git`
+
+2.  **Check Git version:**
     ```bash
     git --version
     ```
-2.  Create a folder for testing:
+
+3.  **Install a Terminal UI client (tig):**
+    While the CLI is powerful, visual tools help understand the repository state. `tig` is an excellent text-mode interface for Git.
+    - **Ubuntu/Debian:** `sudo apt install tig`
+    - **CentOS/RHEL:** `sudo dnf install tig`
+
+4.  **Create a folder for testing:**
     ```bash
     mkdir module01-test
     cd module01-test
     ```
-3.  Initialize the repository:
+
+5.  **Initialize the repository:**
     ```bash
     git init
     ```
-4.  Verify that a hidden `.git` folder was created:
+
+6.  **Verify that a hidden `.git` folder was created:**
     ```bash
     ls -la
     ```
+    *(Note: This `.git` folder is the heart of your repository. It is where Git stores all its internal information, configuration, and the entire history of your commits. If you delete this folder, the project stops being a Git repository.)*
+
+7.  **Quick Stage and Commit with tig:**
+    Let's create a file and use `tig` to commit it.
+    ```bash
+    echo "Hello Git" > hello.txt
+    tig status
+    ```
+    Inside `tig`:
+    - Press `u` on the `hello.txt` file to stage it (move it to "Changes to be committed").
+    - Press `C` (Shift+C) to commit.
+    - Type your commit message in the editor that opens, save, and exit.
+    - Press `q` to quit `tig`.
 
 ---
 [Back to Home](../README.md)
