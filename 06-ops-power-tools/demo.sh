@@ -167,11 +167,15 @@ student_command "git log --oneline --graph --all"
 wait_user
 
 echo -e "\n${YLW}Now we switch back to our feature branch and REBASE it on top of main:${RST}"
+echo -e "${YLW}This will 'lift' our cache commit and replay it AFTER the timeout fix.${RST}"
 student_command "git checkout feature-cache"
 student_command "git rebase main"
 wait_user
 
-echo -e "\n${YLW}Let's look at the history after rebase - notice how clean and linear it is!${RST}"
+echo -e "\n${YLW}Let's look at the history after rebase - notice what happened:${RST}"
+echo -e "${YLW}1. The history is now completely linear (no branching lines).${RST}"
+echo -e "${YLW}2. Our 'cache' commit has a NEW hash! Git rewrote the commit.${RST}"
+echo -e "${YLW}3. 'feature-cache' is now sitting directly on top of 'main'.${RST}"
 student_command "git log --oneline --graph --all"
 wait_user
 
