@@ -62,11 +62,11 @@ style: |
 ### Myths and Truths about Git
 
 - ❌ **Myth:** "I need a GitHub account to use Git."
-  ✅ **Truth:** Git works entirely locally. You don't need the internet or an account to use version control on your machine.
+  - ✅ **Truth:** Git works entirely locally. You don't need the internet or an account to use version control on your machine.
 - ❌ **Myth:** "Git requires a remote server to collaborate."
-  ✅ **Truth:** John can share his repository directly with Jane over a local network. We only use remote servers (like GitHub) for **convenience** — if John goes on vacation, we don't want his laptop to stay powered on just so others can access the code!
+  - ✅ **Truth:** John can share his repository directly with Jane over a local network. We only use remote servers (like GitHub) for **convenience** — if John goes on vacation, we don't want his laptop to stay powered on just so others can access the code!
 - ❌ **Myth:** "Git is only for software developers."
-  ✅ **Truth:** Git tracks *any* text. Ops teams use it for Ansible, Terraform, and documentation.
+  - ✅ **Truth:** Git tracks *any* text. Ops teams use it for Ansible, Terraform, and documentation.
 
 ---
 
