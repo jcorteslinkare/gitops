@@ -31,11 +31,17 @@ Let's simulate creating an Ansible inventory.
 2.  Check status: `git status`. The file appears as **untracked**.
 3.  Add to staging: `git add inventory.ini`.
 4.  Check status again. The file is ready for commit.
-5.  Commit:
+5.  Wait, we staged it too early! Remove it from staging:
     ```bash
+    git rm --cached inventory.ini
+    ```
+    *Warning:* Use `--cached` to remove it from staging but keep the file safely on your disk. Be extremely careful with `-f` (`git rm -f`), as it forces the removal and deletes the file permanently from your disk as well!
+6.  Add it back and Commit:
+    ```bash
+    git add inventory.ini
     git commit -m "feat: add initial inventory"
     ```
-6.  Change the file (add another server) and use `git diff` to see the difference before repeating the process.
+7.  Change the file (add another server) and use `git diff` to see the difference before repeating the process.
 
 ---
 [Back to Home](../README.md)

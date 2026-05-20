@@ -45,6 +45,15 @@ echo -e "${YLW}Your file is now safely prepared on the staging loading dock!${RS
 student_command "git status"
 wait_user
 
+echo -e "\n${YLW}Wait, what if we staged a file by mistake? Let's remove it from the Staging Area!${RST}"
+echo -e "${YLW}We use 'git rm --cached <file>' to unstage it, but keep the file on our disk.${RST}"
+echo -e "${RED}⚠️ WARNING: Be extremely careful with 'git rm -f', as it deletes the file from your disk permanently!${RST}"
+student_command "git rm --cached config.yml && git status"
+wait_user
+
+echo -e "\n${YLW}Okay, let's stage it again so we can commit it.${RST}"
+student_command "git add config.yml"
+wait_user
 
 print_step 3 "The Git Repository (Committed State)"
 echo -e "${YLW}Scenario: Now we want to take a permanent, immutable snapshot of our staged changes.${RST}"
@@ -104,6 +113,7 @@ print_summary \
     "Concept: Git stores high-speed, cryptographic 'snapshots' (photos), unlike SVN's slow delta changesets." \
     "How Git is fully distributed, providing each developer with a complete copy of the database and history." \
     "Accidental credential leakage: Git history is immutable; committed secrets (passwords/keys) are visible forever." \
-    "Basic lifecycle pipeline: 'git status' (checks state), 'git add' (stages), 'git commit' (saves), and 'git diff' (inspects)."
+    "Basic lifecycle pipeline: 'git status' (checks state), 'git add' (stages), 'git commit' (saves), and 'git diff' (inspects)." \
+    "Unstaging files: use 'git rm --cached' to remove from staging safely, and avoid '-f' which deletes files from disk."
 
 echo -e "\n${GRN}Module 03 completed!${RST}"
