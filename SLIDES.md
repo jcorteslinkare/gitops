@@ -26,7 +26,7 @@ style: |
   td, th { border: 1px solid #30363d; padding: 0.4em 0.8em; }
 ---
 
-# Git for DevOps & Ops
+# Git for Ops
 ## From System Administration to GitOps
 
 > _"An Ops team without Git is like a surgeon without a scalpel."_
