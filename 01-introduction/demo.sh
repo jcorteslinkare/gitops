@@ -9,15 +9,25 @@ rm -rf "$REPO_DIR"
 mkdir -p "$REPO_DIR" && cd "$REPO_DIR"
 
 print_step 1 "Install Git and check version"
-echo -e "${YLW}Before starting, let's ensure Git is installed on your system.${RST}"
-echo -e "${YLW}You can install it via your package manager (e.g., 'sudo apt install git', 'sudo dnf install git').${RST}\n"
+echo -e "${YLW}Before starting, let's ensure Git is installed on your system.${RST}\n"
+if command -v dnf >/dev/null 2>&1; then
+    student_command "sudo dnf install -y git"
+else
+    student_command "sudo apt install -y git"
+fi
+echo -e "\n${YLW}Now let's check its version:${RST}\n"
 student_command "git --version"
 wait_user
 
 print_step 2 "Install a Terminal UI client (tig)"
 echo -e "${YLW}While the CLI is standard, visual tools are great for daily Ops work.${RST}"
-echo -e "${YLW}'tig' is an excellent text-mode interface for Git.${RST}"
-echo -e "${YLW}Install it (e.g., 'sudo apt install tig' or 'sudo dnf install tig').${RST}\n"
+echo -e "${YLW}'tig' is an excellent text-mode interface for Git.${RST}\n"
+if command -v dnf >/dev/null 2>&1; then
+    student_command "sudo dnf install -y tig"
+else
+    student_command "sudo apt install -y tig"
+fi
+echo -e "\n${YLW}Let's verify tig is installed:${RST}\n"
 student_command "tig --version"
 wait_user
 
