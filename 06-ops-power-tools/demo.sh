@@ -109,12 +109,69 @@ wait_user
 student_command "cat firewall.sh"
 wait_user
 
+print_step 4 "Undo a bad commit with Git Reset"
+echo -e "${YLW}Scenario: You committed a broken configuration or used a terrible commit message.${RST}"
+echo -e "${YLW}Since you haven't pushed it yet, you can safely undo it using 'git reset'.${RST}\n"
+
+echo -e "${YLW}Let's create a 'bad' commit that we want to undo:${RST}"
+student_command "echo 'broken_syntax=true' >> nginx.conf"
+student_command "git add nginx.conf"
+student_command "git commit -m 'oops this is a bad commit'"
+student_command "git log --oneline -n 2"
+wait_user
+
+echo -e "\n${YLW}Now, let's undo the commit but keep the file changes staged (safe reset):${RST}"
+student_command "git reset --soft HEAD~1"
+student_command "git status"
+student_command "git log --oneline -n 1"
+wait_user
+
+echo -e "\n${YLW}What if we want to discard the changes entirely? (hard reset)${RST}"
+student_command "git reset --hard HEAD"
+student_command "cat nginx.conf"
+wait_user
+
+print_step 5 "Keep a linear history with Git Rebase"
+echo -e "${YLW}Scenario: You've been working on a new feature branch for days.${RST}"
+echo -e "${YLW}Meanwhile, 'main' has advanced. You want to update your branch with main's changes${RST}"
+echo -e "${YLW}but keep a clean, linear history for your final Pull Request.${RST}\n"
+
+echo -e "${YLW}First, let's create our feature branch and add some work:${RST}"
+student_command "git checkout -b feature-cache"
+student_command "echo 'cache_enabled=true' > cache.conf"
+student_command "git add cache.conf"
+student_command "git commit -m 'feat: add cache layer'"
+wait_user
+
+echo -e "\n${YLW}Now, let's simulate someone else pushing a critical update to 'main':${RST}"
+student_command "git checkout main"
+student_command "echo 'timeout=30s' > limits.conf"
+student_command "git add limits.conf"
+student_command "git commit -m 'fix: add global timeout limits'"
+wait_user
+
+echo -e "\n${YLW}Let's look at the current diverging history before the rebase:${RST}"
+student_command "git log --oneline --graph --all"
+wait_user
+
+echo -e "\n${YLW}Now we switch back to our feature branch and REBASE it on top of main:${RST}"
+student_command "git checkout feature-cache"
+student_command "git rebase main"
+wait_user
+
+echo -e "\n${YLW}Let's look at the history after rebase - notice how clean and linear it is!${RST}"
+student_command "git log --oneline --graph --all"
+wait_user
+
 print_summary \
     "How to temporarily save unfinished workspace modifications using 'git stash'." \
     "How to pop stashed work back into your working directory using 'git stash pop'." \
     "Why stashing is crucial for Ops: switching branches quickly during production emergencies." \
     "How to search specific commit history hashes using targeted log searches (e.g., 'git log experimental --oneline -n 1')." \
     "How to surgically import a single, critical hotfix from another branch using 'git cherry-pick <commit-hash>'." \
-    "Why cherry-picking is a key Ops power tool for copying hotfixes directly to production branches without merging unstable features."
+    "Why cherry-picking is a key Ops power tool for copying hotfixes directly to production branches without merging unstable features." \
+    "How to safely undo a local commit without losing code using 'git reset --soft'." \
+    "How to completely discard unwanted local changes using 'git reset --hard'." \
+    "How to update your feature branch with main's latest changes while keeping a linear history using 'git rebase'."
 
 echo -e "\n${GRN}Module 06 completed!${RST}"

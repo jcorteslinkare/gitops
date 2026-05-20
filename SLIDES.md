@@ -115,6 +115,8 @@ git config --global alias.last "log -1 HEAD"
 > 🎯 **Focus here:** The `git lg` alias will appear in every module from now on.
 > Show the output of `git lg` on a repo with rich history.
 
+> ⚡ **Demo:** `./run-exercises.sh 02` — configure identity and aliases
+
 ---
 
 ## Module 03: Basic Workflow (15 min)
@@ -392,6 +394,12 @@ git merge upstream/main
       │                         │
 ```
 
+**Example PR Description:**
+- **Title:** `feat: enable rate limiting on frontend`
+- **Why:** Prevent abuse from bad bots on `/login`
+- **What:** Applied limit of 10 req/s per IP
+- **Rollback:** Revert this PR or set `rate_limiting: false`
+
 > **Ops Best Practice:** No infrastructure change goes to `main` without at least 1 approval.
 
 ---
@@ -445,9 +453,9 @@ git cherry-pick abc1234
 ### `git reset` — Undoing local mistakes
 
 **`git reset --soft`** — safest: moves HEAD back, keeps your changes staged
+**Scenario:** You committed too early with a bad message, or forgot to add a file. It's only local, not pushed yet.
 
 ```bash
-# Scenario: you committed too early with a bad message — only local, not pushed yet
 git log --oneline
 # a1b2c3 WIP asdfasdf       ← this commit is a mess
 # d4e5f6 feat: add nginx config
@@ -457,18 +465,22 @@ git commit -m "feat: add ssl termination to nginx"   # clean re-commit
 ```
 
 **`git reset --hard`** — destructive: moves HEAD back AND discards all changes
+**Scenario:** You went down the wrong path experimenting and want to start over entirely from a known good state.
 
 ```bash
-# Scenario: you went down the wrong path and want to start over entirely
 git reset --hard HEAD~2    # wipe last 2 commits + working dir changes
 # ⚠️ No recovery without git reflog — only use locally, never after push
 ```
 
 > ⚠️ Golden rule: **Never reset commits that have already been pushed / shared with others.**
 
+> ⚡ **Demo:** `./run-exercises.sh 06` — undo a mistake with `reset --soft` and `reset --hard`
+
 ---
 
 ### `git rebase` — Replaying commits on a new base
+
+**Scenario:** You've been working on a feature branch for a few days. Meanwhile, `main` has moved forward with critical updates. You want to bring those updates into your branch, but keep a clean, linear history for your final PR.
 
 ```
 BEFORE rebase:                    AFTER git rebase main:
@@ -483,7 +495,6 @@ BEFORE rebase:                    AFTER git rebase main:
 The result is a clean, linear history — no merge commit noise.
 
 ```bash
-# Typical safe use: clean up your local feature branch before opening a PR
 git checkout feature/my-fix
 git rebase main          # replay my commits on top of latest main
 
@@ -497,6 +508,8 @@ git rebase --continue    # move to next commit
 
 > 🎯 **Focus here:** `rebase` rewrites SHAs — safe only on **your own local branch**, never on shared branches.
 > ⚠️ If in doubt: use `git merge` instead. Less clean history, but zero risk of breaking teammates.
+
+> ⚡ **Demo:** `./run-exercises.sh 06` — rebase a feature branch onto main
 
 ---
 
@@ -568,21 +581,10 @@ fi
 ```mermaid
 
 flowchart LR
-  subgraph Dev ["👨‍💻 Developer"]
-    C[Edit deployment.yaml\nreplicas: 3 → 5]
-  end
-  subgraph Git ["📁 Git Repository\n(Single Source of Truth)"]
-    R[git commit + push]
-  end
-  subgraph Agent ["🤖 GitOps Agent\n(ArgoCD / Flux)"]
-    W[Continuous Watch\nReconciliation Loop]
-  end
-  subgraph Cluster ["☸️ Kubernetes Cluster"]
-    K[Actual cluster\nrunning state]
-  end
-  C --> R --> W
-  W -- "Drift detected!\nApplying changes..." --> K
-  K -- "Current state" --> W
+  Dev["👨‍💻 Developer\n(Edit YAML)"] -->|commit + push| Git["📁 Git Repo\n(Source of Truth)"]
+  Git -->|watch| Agent["🤖 GitOps Agent\n(ArgoCD/Flux)"]
+  Agent -- "Drift detected!\nApplying changes" --> Cluster["☸️ Kubernetes\n(Actual state)"]
+  Cluster -- "Current state" --> Agent
 ```
 
 ---

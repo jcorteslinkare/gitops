@@ -31,6 +31,8 @@ Instead of creating "merge commits" that clutter history, rebase places your com
 2.  Use `git stash` and verify that the change disappeared (`cat` the file).
 3.  Use `git stash list`.
 4.  Use `git stash pop` and see the change return.
+5.  Create a commit, then use `git reset --soft HEAD~1` to undo it while keeping the files intact.
+6.  Create an experimental branch with a commit, switch to main to make another commit, then rebase the experimental branch onto main to achieve a linear history.
 
 ---
 [Back to Home](../README.md)
