@@ -287,9 +287,9 @@ gitGraph
 ```yaml
 # ansible/vars/features.yml — the feature flag file, also in Git!
 features:
-  new_tls_config: false    # commit the code, hide the behaviour
-  rate_limiting: true
-  experimental_cache: false
+  tls_config_v2: false    # commit the code, hide the behaviour
+  rate_limiting_v4: true
+  experimental_cache_v7: false
 ```
 
 ```bash
@@ -297,7 +297,7 @@ features:
 - name: Apply new TLS config
   include_tasks: tls_v2.yml
   when: 
-    - features.new_tls_config
+    - features.tls_config_v2
 ```
 
 **TBD workflow:**
@@ -430,10 +430,10 @@ git merge upstream/main
 ### Pull Requests — The Foundation of Code Review
 
 ```
-  Developer              Reviewer / Tech Lead
+  Developer              Reviewer / Ops Engineer
       │                         │
       ├─ git push origin ──────►│
-      │   feature/my-change     │
+      │   request/promote-to-qa │
       │                         ├─ Reviews the diff
       │                         ├─ Leaves comments
       │◄────────── Approves ────┤
@@ -443,10 +443,10 @@ git merge upstream/main
 ```
 
 **Example PR Description:**
-- **Title:** `feat: enable rate limiting on frontend`
-- **Why:** Prevent abuse from bad bots on `/login`
-- **What:** Applied limit of 10 req/s per IP
-- **Rollback:** Revert this PR or set `rate_limiting: false`
+- **Title:** `promotion: enable rate limiting on frontend`
+- **Why:** Deploy new version of the software
+- **What:** No changes to the infra but just container version update
+- **Rollback:** Revert this PR because there are no changes in the database
 
 > **Ops Best Practice:** No infrastructure change goes to `main` without at least 1 approval.
 
