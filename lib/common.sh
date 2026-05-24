@@ -3,7 +3,8 @@
 RED='\033[0;31m'; GRN='\033[0;32m'; YLW='\033[1;33m'
 BLU='\033[0;34m'; MAG='\033[0;35m'; CYN='\033[1;36m'
 BOLD='\033[1m'; DIM='\033[2m'; RST='\033[0m'
-
+# Ensure Git uses English locale for presentation
+export LANG=C
 # Setup training directory (ignored by git in the workspace root)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TRAINING_DIR="${SCRIPT_DIR}/../training"

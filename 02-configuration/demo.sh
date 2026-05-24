@@ -48,11 +48,11 @@ echo -e "\n${YLW}3. Verify that your global configuration still safely preserves
 student_command "git config --global user.email"
 wait_user
 
-echo -e "\n${YLW}4. Clean up the global identity we created so we don't pollute your machine:${RST}"
-student_command "git config --global --unset user.name"
-wait_user
-student_command "git config --global --unset user.email"
-wait_user
+#echo -e "\n${YLW}4. Clean up the global identity we created so we don't pollute your machine:${RST}"
+#student_command "git config --global --unset user.name"
+#wait_user
+#student_command "git config --global --unset user.email"
+#wait_user
 
 
 print_step 3 "Add useful Ops aliases"
