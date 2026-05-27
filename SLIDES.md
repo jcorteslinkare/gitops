@@ -534,8 +534,8 @@ git reset --hard HEAD~2    # wipe last 2 commits + working dir changes
 BEFORE rebase:                    AFTER git rebase main:
 
   main:     A─B─C                   main:     A─B─C
-                 \                                  \
-  feature:        D─E                feature:        D'─E'
+             \                                     \
+  feature:    D─E                   feature:        D'─E'
                                                  (new SHA!)
 ```
 
