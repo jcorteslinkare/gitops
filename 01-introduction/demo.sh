@@ -38,10 +38,21 @@ echo -e "${YLW}Let's initialize our very first Git repository!${RST}\n"
 student_command "git init"
 wait_user
 
-print_step 4 "Verify the Git directory"
+print_step 4 "Verify the Git directory structure"
 echo -e "${YLW}Scenario: Git stores all its configuration, history, and internal metadata in a hidden folder.${RST}"
-echo -e "${YLW}Let's list all files, including hidden ones, to see the newly created '.git' folder:${RST}\n"
-student_command "ls -la"
+echo -e "${YLW}Let's use 'tree' to look inside the '.git' folder:${RST}\n"
+if command -v dnf >/dev/null 2>&1; then
+    student_command "sudo dnf install -y tree > /dev/null"
+else
+    student_command "sudo apt install -y tree > /dev/null"
+fi
+echo ""
+student_command "tree .git"
+echo -e "\n${YLW}Brief overview of what you are seeing:${RST}"
+echo -e "${YLW} - HEAD     : A file that points to your current active branch.${RST}"
+echo -e "${YLW} - config   : Your repository-specific settings.${RST}"
+echo -e "${YLW} - objects/ : The actual database where snapshots (files and commits) are saved.${RST}"
+echo -e "${YLW} - refs/    : The pointers to your branches (like 'main') and tags.${RST}"
 wait_user
 
 print_step 5 "Quick Stage and Commit using tig"
