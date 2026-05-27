@@ -555,7 +555,12 @@ git rebase --continue    # move to next commit
 ```
 
 > 🎯 **Focus here:** `rebase` rewrites SHAs — safe only on **your own local branch**, never on shared branches.
-> ⚠️ If in doubt: use `git merge` instead. Less clean history, but zero risk of breaking teammates.
+
+| Scenario | Recommendation | Why? |
+|----------|----------------|------|
+| **1. Pulling updates to your local branch** | ✅ **`git pull --rebase`** | Perfect! Rewrites *only your unshared* commits on top of the new updates. No one else is affected. |
+| **2. Adding new code to a shared branch** | ✅ **`git push` / `git merge`** | 100% Safe. You are just pushing the history forward. Old shared commits remain untouched. |
+| **3. Rebasing already shared commits** | ❌ **DANGEROUS** | You rewrite the past. Alice's local history will clash with your rewritten history, causing chaotic conflicts! |
 
 > ⚡ **Demo:** `./run-exercises.sh 06` — rebase a feature branch onto main
 
