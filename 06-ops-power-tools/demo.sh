@@ -155,15 +155,15 @@ student_command "git add cache.conf"
 student_command "git commit -m 'feat: add cache configuration'"
 wait_user
 
-echo -e "\n${YLW}Now, let's simulate a colleague pushing a global timeout fix to 'main' while we were away:${RST}"
+echo -e "\n${YLW}Now, let's simulate a colleague (Alice) pushing a global timeout fix to 'main' while we were away:${RST}"
 student_command "git checkout main"
 student_command "echo 'proxy_read_timeout 30s;' > limits.conf"
 student_command "git add limits.conf"
-student_command "git commit -m 'fix: add global timeout limits'"
+student_command "git commit --author='Alice <alice@example.com>' -m 'fix: add global timeout limits'"
 wait_user
 
-echo -e "\n${YLW}Let's look at the diverging history (notice the two separate paths):${RST}"
-student_command "git log --oneline --graph --all"
+echo -e "\n${YLW}Let's look at the diverging history (notice the two separate paths and the authors):${RST}"
+student_command "git log --graph --all --pretty=format:'%C(auto)%h%C(reset) -%C(auto)%d%C(reset) %s %C(cyan)(%an)%C(reset)'"
 wait_user
 
 echo -e "\n${YLW}Now we switch back to our feature branch and REBASE it on top of main:${RST}"
@@ -175,8 +175,8 @@ wait_user
 echo -e "\n${YLW}Let's look at the history after rebase - notice what happened:${RST}"
 echo -e "${YLW}1. The history is now completely linear (no branching lines).${RST}"
 echo -e "${YLW}2. Our 'cache' commit has a NEW hash! Git rewrote the commit.${RST}"
-echo -e "${YLW}3. 'feature-cache' is now sitting directly on top of 'main'.${RST}"
-student_command "git log --oneline --graph --all"
+echo -e "${YLW}3. 'feature-cache' is now sitting directly on top of 'main' (after Alice's commit).${RST}"
+student_command "git log --graph --all --pretty=format:'%C(auto)%h%C(reset) -%C(auto)%d%C(reset) %s %C(cyan)(%an)%C(reset)'"
 wait_user
 
 print_summary \
