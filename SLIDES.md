@@ -693,18 +693,21 @@ flowchart LR
 ## Summary — What We Learned Today
 
 ```
-  ┌─────────────────────────────────────────────────┐
-  │  Git for Ops — Cheat Sheet                      │
-  ├─────────────────────────────────────────────────┤
-  │  git init / clone     → Start / copy a repo     │
-  │  git add / commit     → Snapshot changes        │
-  │  git log --oneline    → View history            │
-  │  git branch / merge   → Parallel work           │
-  │  git stash / pop      → Pause and resume        │
-  │  git cherry-pick      → Copy a specific commit  │
-  │  git push / pull      → Sync with the team      │
-  │  .git/hooks/          → Local automation        │
-  └─────────────────────────────────────────────────┘
+  ┌─────────────────────────────────────────────────────┐
+  │  Git for Ops — Cheat Sheet                          │
+  ├─────────────────────────────────────────────────────┤
+  │  git init / clone      → Start / copy a repo        │
+  │  git add / commit      → Snapshot changes           │
+  │  git log --oneline     → View history               │
+  │  git branch / merge    → Parallel work              │
+  │  git stash / pop       → Pause and resume           │
+  │  git cherry-pick       → Copy a specific commit     │
+  │  git reset             → Undo local mistakes        │
+  │  git rebase            → Replay local commits       │
+  │  git push / pull       → Sync with the team         │
+  │  git pull --rebase     → Sync + keep history linear │
+  │  .git/hooks/           → Local automation           │
+  └─────────────────────────────────────────────────────┘
 ```
 
 ---
