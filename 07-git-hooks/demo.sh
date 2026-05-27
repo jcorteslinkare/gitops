@@ -64,6 +64,23 @@ echo -e "${YLW}using 'chmod +x' so that Git is allowed to run this hook before e
 student_command "chmod +x $HOOK_FILE"
 wait_user
 
+echo -e "\n${RED}⚠️  IMPORTANT: Is 'chmod +x' enough to share this hook?${RST}"
+echo -e "${YLW}No! The '.git/hooks' folder is strictly LOCAL. It is NEVER pushed to the server.${RST}"
+echo -e "${YLW}To share hooks with your team, you must place them in a tracked folder (e.g. '.githooks/')${RST}"
+echo -e "${YLW}and configure Git to read from it: 'git config core.hooksPath .githooks'${RST}\n"
+
+echo -e "${YLW}🔒 SECURITY QUESTION: Can we force hooks to activate automatically when someone clones?${RST}"
+echo -e "${YLW}No. Git intentionally blocks this. If hooks ran automatically on clone, an attacker${RST}"
+echo -e "${YLW}could trick you into downloading and silently executing malware on your machine!${RST}"
+echo -e "${YLW}Industry standard: Teams use a setup script (like 'make init' or 'npm install')${RST}"
+echo -e "${YLW}that developers run once after cloning, which configures the hooks locally.${RST}\n"
+
+echo -e "${YLW}💡 What about SVN's 'svn propset svn:executable ON'?${RST}"
+echo -e "${YLW}Unlike SVN, Git natively reads file system permissions. If you run 'chmod +x script.sh'${RST}"
+echo -e "${YLW}and commit it, Git automatically records it as an executable file (mode 100755).${RST}"
+echo -e "${YLW}When your colleagues pull it, it will automatically be executable on their machines!${RST}"
+wait_user
+
 print_step 3 "Test the Hook (Block Unfinished Work)"
 echo -e "${YLW}Scenario: Now let's try to commit a script containing an unfinished 'TODO' comment.${RST}"
 echo -e "${YLW}Our pre-commit hook should automatically detect it and block our commit!${RST}\n"

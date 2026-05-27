@@ -66,7 +66,7 @@ execute_command "git clone $REMOTE_REPO $COLLEAGUE_DIR"
 execute_command "cd $COLLEAGUE_DIR"
 execute_command "echo \"Colleague's update\" > update.txt"
 execute_command "git add update.txt"
-execute_command "git commit -m \"feat: colleague added update.txt\""
+execute_command "git commit --author=\"Alice <alice@example.com>\" -m \"feat: colleague added update.txt\""
 execute_command "git push origin main"
 
 echo -e "\n${RED}⚠️  DISTRIBUTED MINDSET CHALLENGE:${RST}"
@@ -87,6 +87,10 @@ wait_user
 
 echo -e "\n${YLW}2. List all files in your workspace to verify Alice's 'update.txt' is now here:${RST}"
 student_command "ls -la"
+wait_user
+
+echo -e "\n${YLW}3. Let's look at the commit history to clearly see Alice's commit:${RST}"
+student_command "git log --graph --all --pretty=format:'%C(auto)%h%C(reset) -%C(auto)%d%C(reset) %s %C(cyan)(%an)%C(reset)'"
 wait_user
 
 print_summary \
