@@ -17,7 +17,7 @@ echo -e "  3. ${BOLD}Git Repository${RST} (The permanent history of snapshots) �
 echo -e "     ${DIM}└─ Snapshots: Git takes full cryptographic 'photos' of your files, not partial differences (deltas).${RST}"
 echo -e "     ${DIM}└─ Permanent: Once committed, history is immutable and secure under a unique SHA hash ID.${RST}"
 echo -e "     ${DIM}└─ vs SVN/CVS: Older centralized systems only store deltas and require a server connection for history.${RST}"
-echo -e "     ${DIM}               Git is fully distributed—you have the entire history locally on your machine at high speed!${RST}\n"
+echo -e "     ${DIM}               Git is fully distributed — you have the entire history locally on your machine at high speed!${RST}\n"
 
 echo -e "${YLW}Scenario: You are setting up a new database configuration file (config.yml).${RST}"
 echo -e "${YLW}Let's create this file in our working directory:${RST}\n"
