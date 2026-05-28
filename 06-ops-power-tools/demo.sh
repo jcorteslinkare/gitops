@@ -142,6 +142,8 @@ wait_user
 echo -e "\n${YLW}Let's wipe out that last commit AND the file changes forever:${RST}"
 student_command "git reset --hard HEAD~1"
 student_command "cat nginx.conf"
+echo -e "\n${YLW}And let's verify that the 'terrible' commit is completely gone from the history:${RST}"
+student_command "git log --oneline -n 2"
 wait_user
 
 print_step 5 "Keep a linear history with Git Rebase"
