@@ -46,13 +46,25 @@ if command -v dnf >/dev/null 2>&1; then
 else
     student_command "sudo apt install -y tree > /dev/null"
 fi
-echo ""
-student_command "tree .git"
-echo -e "\n${YLW}Brief overview of what you are seeing:${RST}"
-echo -e "${YLW} - HEAD     : A file that points to your current active branch.${RST}"
-echo -e "${YLW} - config   : Your repository-specific settings.${RST}"
-echo -e "${YLW} - objects/ : The actual database where snapshots (files and commits) are saved.${RST}"
-echo -e "${YLW} - refs/    : The pointers to your branches (like 'main') and tags.${RST}"
+
+if [[ "${PLAY_MODE}" == "demo" ]]; then
+    echo ""
+    execute_command "tree .git"
+    sleep 1
+    echo -e "\n${YLW}Brief overview of what you are seeing:${RST}"
+    echo -e "${YLW} - HEAD     : A file that points to your current active branch.${RST}"
+    echo -e "${YLW} - config   : Your repository-specific settings.${RST}"
+    echo -e "${YLW} - objects/ : The actual database where snapshots (files and commits) are saved.${RST}"
+    echo -e "${YLW} - refs/    : The pointers to your branches (like 'main') and tags.${RST}"
+else
+    echo -e "\n${YLW}Brief overview of what you will see when you run 'tree .git':${RST}"
+    echo -e "${YLW} - HEAD     : A file that points to your current active branch.${RST}"
+    echo -e "${YLW} - config   : Your repository-specific settings.${RST}"
+    echo -e "${YLW} - objects/ : The actual database where snapshots (files and commits) are saved.${RST}"
+    echo -e "${YLW} - refs/    : The pointers to your branches (like 'main') and tags.${RST}"
+    echo ""
+    student_command "tree .git"
+fi
 wait_user
 
 print_step 5 "Quick Stage and Commit using tig"
