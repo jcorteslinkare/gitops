@@ -134,6 +134,7 @@ wait_user
 
 echo -e "\n${YLW}What if we commit something terrible and want to completely erase it? (hard reset)${RST}"
 student_command "echo 'THIS IS TERRIBLE' >> nginx.conf"
+echo -e "${YLW}(Note: We use 'git commit -am'. The '-a' flag automatically stages modified tracked files, acting as a shortcut for 'git add'.) ${RST}"
 student_command "git commit -am 'experimental: broke everything'"
 student_command "git log --oneline -n 2"
 wait_user
